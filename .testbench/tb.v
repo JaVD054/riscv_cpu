@@ -25,64 +25,64 @@ end
 
 // check results of simple RISC-V CPU (from book)
 // performing standard instructions
-initial begin
-    reset = 1;
-    Ext_MemWrite = 0; Ext_DataAdr = 32'b0; Ext_WriteData = 32'b0; #10;
-    reset = 0;
-end
-
-always @(negedge clk) begin
-    # 10;
-    if(MemWrite && !reset) begin
-        if(DataAdr === 100 & WriteData === 25) begin
-            $display("Simulation succeeded");
-            $stop;
-        end
-        else if (DataAdr !== 96) begin
-            $display("Simulation failed");
-            $stop;
-        end
-    end
-end
-
-// For Sum of Natural Number
 // initial begin
 //     reset = 1;
-
-//     // set N variable as ten in the memory address 02000000
-//     Ext_MemWrite = 1; Ext_WriteData = 20; Ext_DataAdr = 32'h02000000;
-//     data_2 = Ext_WriteData; #10;
-//     Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h02000000; #10;
-
-//     // Write Sum as 0 in the memory address 02000004
-//     Ext_MemWrite = 1; Ext_WriteData = 00; Ext_DataAdr = 32'h02000004;
-//     data_1 = Ext_WriteData; #10;
-//     // compute cpu_data
-//     for (i = 1; i <= data_2; i = i + 1'b1) begin
-//         cpu_data = cpu_data + i;
-//     end
-//     Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h02000004; #10;
-
-//     // Write CPU_Done as 0 in the memory address 02000008
-//     Ext_MemWrite = 1; Ext_WriteData = 00; Ext_DataAdr = 32'h02000008; #10;
-//     Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h0; #10;
-
-//     Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h0; #10;
-
+//     Ext_MemWrite = 0; Ext_DataAdr = 32'b0; Ext_WriteData = 32'b0; #10;
 //     reset = 0;
-//     // External Memory Access Disabled
-//     Ext_MemWrite = 0; Ext_WriteData = 0; Ext_DataAdr = 0;
 // end
 
 // always @(negedge clk) begin
+//     # 10;
 //     if(MemWrite && !reset) begin
-//         if (DataAdr === 32'h02000004 & WriteData === cpu_data) flag = 1;
-//         if(flag === 1 & DataAdr === 32'h02000008 & WriteData === 1) begin
+//         if(DataAdr === 100 & WriteData === 25) begin
 //             $display("Simulation succeeded");
+//             $stop;
+//         end
+//         else if (DataAdr !== 96) begin
+//             $display("Simulation failed");
 //             $stop;
 //         end
 //     end
 // end
+
+// For Sum of Natural Number
+initial begin
+    reset = 1;
+
+    // set N variable as ten in the memory address 02000000
+    Ext_MemWrite = 1; Ext_WriteData = 20; Ext_DataAdr = 32'h02000000;
+    data_2 = Ext_WriteData; #10;
+    Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h02000000; #10;
+
+    // Write Sum as 0 in the memory address 02000004
+    Ext_MemWrite = 1; Ext_WriteData = 00; Ext_DataAdr = 32'h02000004;
+    data_1 = Ext_WriteData; #10;
+    // compute cpu_data
+    for (i = 1; i <= data_2; i = i + 1'b1) begin
+        cpu_data = cpu_data + i;
+    end
+    Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h02000004; #10;
+
+    // Write CPU_Done as 0 in the memory address 02000008
+    Ext_MemWrite = 1; Ext_WriteData = 00; Ext_DataAdr = 32'h02000008; #10;
+    Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h0; #10;
+
+    Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h0; #10;
+
+    reset = 0;
+    // External Memory Access Disabled
+    Ext_MemWrite = 0; Ext_WriteData = 0; Ext_DataAdr = 0;
+end
+
+always @(negedge clk) begin
+    if(MemWrite && !reset) begin
+        if (DataAdr === 32'h02000004 & WriteData === cpu_data) flag = 1;
+        if(flag === 1 & DataAdr === 32'h02000008 & WriteData === 1) begin
+            $display("Simulation succeeded");
+            $stop;
+        end
+    end
+end
 
 // For Arithmetic Progression
 // initial begin
