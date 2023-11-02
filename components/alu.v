@@ -6,13 +6,14 @@ module alu #(parameter WIDTH = 32) (
     input       [2:0] alu_ctrl,         // ALU control
     input       op7b5,                   // bit 5 of funct7
     output reg  [WIDTH-1:0] alu_out,    // ALU output
-    output      zero                    // zero flag
+    output      zero,                    // zero flag
+	 output reg  carry
 );
 
 always @(a, b, alu_ctrl) begin
     case (alu_ctrl)
         3'b000:  alu_out <= a + b;       // ADD
-        3'b001:  alu_out <= a + ~b + 1;  // SUB
+        3'b001:  {carry,alu_out} <= {1'b0 ,a} + {1'b1, ~b + 1};  // SUB
         3'b010:  alu_out <= a & b;       // AND
         3'b011:  alu_out <= a | b;       // OR
         3'b100:  alu_out <= a ^ b;       // XOR

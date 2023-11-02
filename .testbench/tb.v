@@ -50,7 +50,7 @@ initial begin
     reset = 1;
 
     // set N variable as ten in the memory address 02000000
-    Ext_MemWrite = 1; Ext_WriteData = 20; Ext_DataAdr = 32'h02000000;
+    Ext_MemWrite = 1; Ext_WriteData = 10; Ext_DataAdr = 32'h02000000;
     data_2 = Ext_WriteData; #10;
     Ext_MemWrite = 0; Ext_WriteData = 00; Ext_DataAdr = 32'h02000000; #10;
 

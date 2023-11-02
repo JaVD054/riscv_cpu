@@ -6,9 +6,9 @@ module datapath (
     input [1:0]   ResultSrc,
     input         PCSrc, ALUSrc,
     input         RegWrite,Jalr,
-    input [1:0]   ImmSrc,
+    input [2:0]   ImmSrc,
     input [2:0]   ALUControl,
-    output        Zero,
+    output        Zero, Carry,
     output [31:0] PC,
     input [31:0]  Instr,
     output [31:0] Mem_WrAddr, Mem_WrData,
@@ -33,7 +33,7 @@ sign_extend    ext (Instr[31:7], ImmSrc, ImmExt);
 
 // ALU logic
 mux2 #(32)      srcbmux(WriteData, ImmExt, ALUSrc, SrcB);
-alu             alu (SrcA, SrcB, ALUControl, Instr[30], ALUResult, Zero);
+alu             alu (SrcA, SrcB, ALUControl, Instr[30], ALUResult, Zero, Carry);
 mux4 #(32)      resultmux(ALUResult, ReadDataExt, PCPlus4,auipcResult, ResultSrc, Result);
 
 //load logic
