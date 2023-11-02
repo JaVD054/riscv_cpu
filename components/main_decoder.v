@@ -29,12 +29,17 @@ always @(*) begin
                 3'b101: controls = 15'b0_010_0_0_00_111_01_0_0; // bge
             endcase
         end  // beq
-        7'b0010011: controls = 15'b1_000_1_0_00_000_10_0_0; // I–type ALU
+        7'b0010011: begin
+            if (funct3[1:0] === 2'b01)
+                controls = 15'b1_101_1_0_00_000_10_0_0; // I–type ALU
+               else 
+                controls = 15'b1_000_1_0_00_000_10_0_0; // I–type ALU
+        end
         7'b1101111: controls = 15'b1_011_0_0_10_000_00_1_0; // jal
         7'b1100111: controls = 15'b1_000_1_0_10_000_00_1_1; // jalr
         7'b0110111: controls = 15'b1_100_1_0_00_000_00_0_0; // lui
         7'b0010111: controls = 15'b1_100_1_0_11_000_00_0_0; // auipc
-        default:    controls = 15'bx_0xx_x_x_xx_0xx_xx_x_x; // ???
+        default:    controls = 15'bx_xxx_x_x_xx_xxx_xx_x_x; // ???
     endcase
 end
 

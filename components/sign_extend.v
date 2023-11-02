@@ -19,6 +19,8 @@ always @(*) begin
         3'b011:   immext = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0};
         // U−type (lui, auipc)
         3'b100:   immext = {instr[31:12], 12'b0};
+        //uimm    (shift)
+        3'b101:   immext = {27'b0,instr[24:20]};
         default: immext = 32'bx; // undefined
     endcase
 end
