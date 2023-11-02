@@ -1,7 +1,6 @@
 db
 incremental_db
 simulation/modelsim/*
-!simulation/modelsim/*.hex
 output_files
 *.bak
 *.log
