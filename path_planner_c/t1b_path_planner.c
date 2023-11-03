@@ -109,7 +109,7 @@ void findPath(int currentVertex, int parents[], uint8_t path_planned[], uint8_t 
 
 // function to find the shortest path from source to destination using Dijkstra's algorithm
 // refered from geekforgeeks
-void dijkstra(int graph[V][V], int src, int dest, uint8_t path_planned[], uint8_t *idx)
+void dijkstra(uint8_t graph[V][V], int src, int dest, uint8_t path_planned[], uint8_t *idx)
 {
 	int dist[V]; 
     int parent[V];
@@ -176,7 +176,7 @@ int main(int argc, char const *argv[]) {
     // ############# Add your code here #############
     //################### my code###################
     //adjacency matrix of the graph
-    int map[30][30] = {
+    uint8_t map[30][30] = {
         {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
