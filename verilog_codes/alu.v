@@ -21,9 +21,9 @@ always @(a, b, alu_ctrl) begin
                     if (a[31] != b[31]) alu_out <= a[31] ? 0 : 1;
                     else alu_out <= a < b ? 1 : 0;
                  end
-        3'b110:  alu_out <= a << b;      // SLL
-        3'b111:  begin if(op7b5) alu_out <= a >>> b; // SRA
-                    else alu_out <= a >> b;      // SRL
+        3'b110:  alu_out <= a << b[4:0];      // SLL
+        3'b111:  begin if(op7b5) alu_out <= a >>> b[4:0]; // SRA
+                    else alu_out <= a >> b[4:0];      // SRL
                  end
         default: alu_out = 0;
     endcase
