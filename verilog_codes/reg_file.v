@@ -23,7 +23,7 @@ initial begin
 end
 
 // register file write logic (synchronous)
-always @(posedge clk) begin
+always @(negedge clk) begin
     if (wr_en) reg_file_arr[wr_addr] <= wr_data;
 end
 
