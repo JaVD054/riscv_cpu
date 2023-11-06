@@ -1,4 +1,5 @@
 db
+.vscode
 incremental_db
 simulation/modelsim/*
 !simulation/modelsim/*.v
@@ -6,3 +7,5 @@ output_files
 *.bak
 *.log
 *.qws
+path_planner
+!path_planner.c
