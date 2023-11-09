@@ -3,6 +3,7 @@ db
 incremental_db
 simulation/modelsim/*
 !simulation/modelsim/*.v
+!simulation/modelsim/*.txt
 output_files
 *.bak
 *.log
@@ -10,3 +11,4 @@ output_files
 path_planner_c/path_planner
 !path_planner.c
 path_planner_c/t1b_path_planner
+simulation/modelsim/results.txt
