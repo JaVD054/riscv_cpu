@@ -104,7 +104,6 @@ int main(int argc, char const *argv[]) {
     // array to store the planned path
 
     // index to keep track of the path_planned array
-    uint8_t idx = 0;
 
     // NODE_POINT = 0;
     // NODE_POINT = 1;
@@ -115,6 +114,10 @@ int main(int argc, char const *argv[]) {
 
     // ############# Add your code here #############
 
+    uint32_t visited = 0x0;
+    uint32_t prev[8];
+    // prev = 0x0200000c;
+    uint32_t dist[8]; 
     // uint32_t* map = (uint32_t*) malloc(sizeof(uint32_t)*30);
     uint32_t map[30];
 
@@ -149,8 +152,6 @@ int main(int argc, char const *argv[]) {
     map[28] = 0b000100000000000000000000001001;
     map[29] = 0b010000000000000000001000000010;
 
-    uint32_t visited = 0x00000000;
-    uint32_t dist[8], prev[8];
 
     for (uint8_t i = 0; i < 30; ++i) {
         array_write(dist, &i, INF);
@@ -188,17 +189,17 @@ int main(int argc, char const *argv[]) {
     // free(map);
 
     uint8_t currentVertex = END_POINT;
-    uint8_t path_planned[10];
+    uint8_t idx = 0;
 
-    path_planned[(idx)++] = currentVertex;
+    map[(idx)++] = currentVertex;
     while (currentVertex != START_POINT) {
-        path_planned[(idx)++]= currentVertex = array_index(prev,&currentVertex);
+        map[(idx)++]= currentVertex = array_index(prev,&currentVertex);
     }
     // ##############################################
 
     // the node values are written into data memory sequentially.
     for (int i = --idx; i >=0; i--) {
-        NODE_POINT = path_planned[i];
+        NODE_POINT = map[i];
     }
 
     // Path Planning Computation Done Flag
@@ -208,7 +209,7 @@ int main(int argc, char const *argv[]) {
 
         _put_str("######### Planned Path #########\n");
         for (int i = idx; i >=0; i--) {
-            _put_value(path_planned[i]);
+            _put_value(map[i]);
         }
         _put_str("################################\n");
 
