@@ -12,3 +12,4 @@ path_planner_c/path_planner
 !path_planner.c
 path_planner_c/t1b_path_planner
 simulation/modelsim/results.txt
+t2b_riscv_cpu_nativelink_simulation.rpt

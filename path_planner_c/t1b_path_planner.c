@@ -118,6 +118,7 @@ int main(int argc, char const *argv[]) {
 
 
     // ############# Add your code here #############
+    if(!(30>START_POINT && START_POINT>=0 && 30>END_POINT && END_POINT>=0)) return 0;
 
     uint32_t visited = 0x0; // visited vertices represented as a bit vector
     
@@ -158,7 +159,7 @@ int main(int argc, char const *argv[]) {
     path_planned[29] = 0b010000000000000000001000000010;
 
     // initialize the distance of all vertices to infinity
-    for (uint8_t i = 0; i < 4; ++i) {
+    for (uint8_t i = 0; i < 4; i++) {
         dist[i] = 0xffffffff;
     }
 
