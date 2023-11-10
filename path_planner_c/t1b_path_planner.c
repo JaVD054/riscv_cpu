@@ -51,34 +51,34 @@
 
 #endif
 
-
+//to find the bit value at a particular position
 int bit_position(uint32_t *n, uint8_t *i) {
     return ((*n >> (29-*i)) & 1);
 }
-
+//to set the bit value at a particular position
 void bit_load(uint32_t *n, uint8_t *i){
     *n |= 0x20000000 >> *i;
 }
 
-
+//to read the 4bit value at a particular position
 uint8_t array_index(uint32_t *arr, uint8_t n) {
     return (arr[(n & 0xf8)>>3]&(0XF0000000>>((n&0x7)*4)))>>(~(n&0x7)*4); 
 } 
-
+//to read the byte value at a particular position 
 uint8_t array_index8(uint32_t *arr, uint8_t n) {
     return (arr[(n & 0xfc)>>2]&(0XFF000000>>((n&0x3)*8)))>>(~(n&0x3)*8); 
 } 
 
-
+//to write the 4bit value at a particular position
 void array_write(uint32_t *arr, uint8_t *n, uint8_t val) {
     arr[(*n & 0xf8)>>3] = (arr[(*n & 0xf8)>>3]&~(0XF0000000>>((*n&0x7)*4))) | (val << (~(*n&0x7)*4));
 }
-
+//to write the byte value at a particular position
 void array_write8(uint32_t *arr, uint8_t *n, uint8_t val) {
     arr[(*n & 0xfc)>>2] = (arr[(*n & 0xfc)>>2]&~(0XFF000000>>((*n&0x3)*8))) | (val << (~(*n&0x3)*8));
 }
 
-
+// A utility function to find the vertex with minimum distance value from src and not in sptSet
 uint8_t minDistance(uint32_t dist[], uint32_t *sptSet)
 {
 	int min = INF, min_index;
@@ -110,21 +110,27 @@ int main(int argc, char const *argv[]) {
 
     #endif
 
-    // array to store the planned path
-    uint32_t path_planned[30];
 
     // index to keep track of the path_planned array
     uint8_t idx = 0;
 
 
     // ############# Add your code here #############
+    
+    // check if the start and end points are valid
     if(!(30>START_POINT && START_POINT>=0 && 30>END_POINT && END_POINT>=0)) return 0;
 
     uint32_t visited = 0x0; // visited vertices represented as a bit vector
-    
-    uint32_t prev[8] ={0}; // array to store the parent of each vertex, each 32 bit integer stores 4 vertices
-    
-    uint32_t dist[4] = {0}; // array to store the distance of each vertex, each 32 bit integer stores 8 vertices
+
+    #ifdef __linux__    // for host pc
+        uint32_t prev[8]; // array to store the parent of each vertex, each 32 bit integer stores 8 vertices
+        uint32_t dist[4]; // array to store the distance of each vertex, each 32 bit integer stores 4 vertices
+        uint32_t path_planned[30]; // array to store the planned path and adjacency matrix of the graph
+    #else
+        uint32_t *path_planned =0x02000040;      
+        uint32_t *prev = 0x02000020; 
+        uint32_t *dist = 0x02000010;
+    #endif
 
     // adjacency matrix of the graph
     path_planned[0] = 0b010000000000000000000000000000;
