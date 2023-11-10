@@ -1,14 +1,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 
 #define V 30
 #define INF 0xf
 
 #ifdef __linux__ // for host pc
 
-    #include <stdio.h>
 
     void _put_byte(char c) { putchar(c); }
 
@@ -55,9 +53,9 @@
 
 
 int bit_position(uint32_t *n, uint8_t *i) {
-    // printf("n: %x\n", n );
     return ((*n >> (29-*i)) & 1);
 }
+
 void bit_load(uint32_t *n, uint8_t *i){
     *n |= 0x20000000 >> *i;
 }
@@ -71,6 +69,7 @@ uint8_t array_index8(uint32_t *arr, uint8_t n) {
     return (arr[(n & 0xfc)>>2]&(0XFF000000>>((n&0x3)*8)))>>(~(n&0x3)*8); 
 } 
 
+
 void array_write(uint32_t *arr, uint8_t *n, uint8_t val) {
     arr[(*n & 0xf8)>>3] = (arr[(*n & 0xf8)>>3]&~(0XF0000000>>((*n&0x7)*4))) | (val << (~(*n&0x7)*4));
 }
@@ -78,6 +77,7 @@ void array_write(uint32_t *arr, uint8_t *n, uint8_t val) {
 void array_write8(uint32_t *arr, uint8_t *n, uint8_t val) {
     arr[(*n & 0xfc)>>2] = (arr[(*n & 0xfc)>>2]&~(0XFF000000>>((*n&0x3)*8))) | (val << (~(*n&0x3)*8));
 }
+
 
 uint8_t minDistance(uint32_t dist[], uint32_t *sptSet)
 {
@@ -111,104 +111,103 @@ int main(int argc, char const *argv[]) {
     #endif
 
     // array to store the planned path
+    uint32_t path_planned[30];
 
     // index to keep track of the path_planned array
+    uint8_t idx = 0;
 
-    // NODE_POINT = 0;
-    // NODE_POINT = 1;
-    // NODE_POINT = 2;
-    // NODE_POINT = 8;
-    // NODE_POINT = 7;
-    // CPU_DONE = 1;
 
     // ############# Add your code here #############
 
-    uint32_t visited = 0x0;
-    uint32_t prev[8] ={0};
-    // prev = 0x0200000c;
-    uint32_t dist[4] = {0}; 
-    // uint32_t* map = (uint32_t*) malloc(sizeof(uint32_t)*30);
-    uint32_t map[30];
+    uint32_t visited = 0x0; // visited vertices represented as a bit vector
+    
+    uint32_t prev[8] ={0}; // array to store the parent of each vertex, each 32 bit integer stores 4 vertices
+    
+    uint32_t dist[4] = {0}; // array to store the distance of each vertex, each 32 bit integer stores 8 vertices
 
-    map[0] = 0b010000000000000000000000000000;
-    map[1] = 0b101000000000000000000000000001;
-    map[2] = 0b010100001000000000000000000000;
-    map[3] = 0b001010000000000000000000000010;
-    map[4] = 0b000101100000000000000000000000;
-    map[5] = 0b000010000000000000000000000000;
-    map[6] = 0b000010010000000000000000000000;
-    map[7] = 0b000000101000000000000000000000;
-    map[8] = 0b001000010100100000000000000000;
-    map[9] = 0b000000001011000000000000000000;
-    map[10] = 0b000000000100000000000000000000;
-    map[11] = 0b000000000100000000000000000000;
-    map[12] = 0b000000001000010000010000000000;
-    map[13] = 0b000000000000101000000000000000;
-    map[14] = 0b000000000000000110000000000000;
-    map[15] = 0b000000000000001000000000000000;
-    map[16] = 0b000000000000001001100000000000;
-    map[17] = 0b000000000000000010000000000000;
-    map[18] = 0b000000000000000010010000000000;
-    map[19] = 0b000000000000100000101000000000;
-    map[20] = 0b000000000000000000010100100001;
-    map[21] = 0b000000000000000000001011000000;
-    map[22] = 0b000000000000000000000100000000;
-    map[23] = 0b000000000000000000000100000000;
-    map[24] = 0b000000000000000000001000010000;
-    map[25] = 0b000000000000000000000000101000;
-    map[26] = 0b000000000000000000000000010110;
-    map[27] = 0b000000000000000000000000001000;
-    map[28] = 0b000100000000000000000000001001;
-    map[29] = 0b010000000000000000001000000010;
+    // adjacency matrix of the graph
+    path_planned[0] = 0b010000000000000000000000000000;
+    path_planned[1] = 0b101000000000000000000000000001;
+    path_planned[2] = 0b010100001000000000000000000000;
+    path_planned[3] = 0b001010000000000000000000000010;
+    path_planned[4] = 0b000101100000000000000000000000;
+    path_planned[5] = 0b000010000000000000000000000000;
+    path_planned[6] = 0b000010010000000000000000000000;
+    path_planned[7] = 0b000000101000000000000000000000;
+    path_planned[8] = 0b001000010100100000000000000000;
+    path_planned[9] = 0b000000001011000000000000000000;
+    path_planned[10] = 0b000000000100000000000000000000;
+    path_planned[11] = 0b000000000100000000000000000000;
+    path_planned[12] = 0b000000001000010000010000000000;
+    path_planned[13] = 0b000000000000101000000000000000;
+    path_planned[14] = 0b000000000000000110000000000000;
+    path_planned[15] = 0b000000000000001000000000000000;
+    path_planned[16] = 0b000000000000001001100000000000;
+    path_planned[17] = 0b000000000000000010000000000000;
+    path_planned[18] = 0b000000000000000010010000000000;
+    path_planned[19] = 0b000000000000100000101000000000;
+    path_planned[20] = 0b000000000000000000010100100001;
+    path_planned[21] = 0b000000000000000000001011000000;
+    path_planned[22] = 0b000000000000000000000100000000;
+    path_planned[23] = 0b000000000000000000000100000000;
+    path_planned[24] = 0b000000000000000000001000010000;
+    path_planned[25] = 0b000000000000000000000000101000;
+    path_planned[26] = 0b000000000000000000000000010110;
+    path_planned[27] = 0b000000000000000000000000001000;
+    path_planned[28] = 0b000100000000000000000000001001;
+    path_planned[29] = 0b010000000000000000001000000010;
 
-
+    // initialize the distance of all vertices to infinity
     for (uint8_t i = 0; i < 4; ++i) {
         dist[i] = 0xffffffff;
     }
 
+    // initialize the distance of the start vertex to 0
     array_write(dist, &START_POINT, 0);
+    // initialize the parent of the start vertex to 0xff
     array_write8(prev, &START_POINT, 0xff);
 
 
 
     for (uint8_t i = 0; i < V - 1; i++) {
+        // pick the vertex with the minimum distance from the set of unvisited vertices
 		uint8_t u = minDistance(dist, &visited);
 
         //break if the destination is reached
-        if (u == END_POINT)
-            break;
+        if (u == END_POINT) break;
+
         //mark the vertex as visited
 		bit_load(&visited,&u);
 
         // updating the distance of the adjacent unvisited vertices
 		for (uint8_t v = 0; v < V; v++)
-			if (!bit_position (&visited,&v) && bit_position (&map[u],&v)   // if the vertex is not visited (value of current v has never been the value of u) 
-                                            //and there is an edge between u and v
-				&& array_index(dist,u) != INF  // if the distance of u is not infinity
-				&& array_index(dist,u) + bit_position (&map[u],&v) < array_index(dist,v)) // sum of distance to u and edge weight of v-u is 
-                                                    //less than the distance to v (v is not visited)
+			if (!bit_position (&visited,&v) && bit_position (&path_planned[u],&v)   
+                                // if the vertex is not visited (value of current v has never been the value of u) 
+                                //and there is an edge between u and v
+				&& array_index(dist,u) != INF  
+                                // if the distance of u is not infinity
+				&& array_index(dist,u) + bit_position (&path_planned[u],&v) < array_index(dist,v)) 
+                                // sum of distance to u and edge weight of v-u is 
+                                //less than the distance to v (v is not visited)
                 {
-                    array_write(dist,&v,array_index(dist,u) + bit_position (&map[u],&v)); //update the distance of v     
-                    // printf("dist: %d\n", array_index(dist,v));
+                    array_write(dist,&v,array_index(dist,u) + bit_position (&path_planned[u],&v)); //update the distance of v     
                     array_write8(prev,&v, u); //update the parent of v
                 }
 	}
-    // free(dist);
-    // free(&visited);
-    // free(map);
 
+    // backtracking the path from the destination to the start
     uint8_t currentVertex = END_POINT;
-    uint8_t idx = 0;
 
-    map[(idx)++] = currentVertex;
+    path_planned[(idx)++] = currentVertex;
     while (currentVertex != START_POINT) {
-        map[(idx)++]= currentVertex = array_index8(prev,currentVertex);
+        path_planned[(idx)++]= currentVertex = array_index8(prev,currentVertex);
     }
+
     // ##############################################
 
     // the node values are written into data memory sequentially.
     for (int i = --idx; i >=0; i--) {
-        NODE_POINT = map[i];
+        NODE_POINT = path_planned[i];
     }
 
     // Path Planning Computation Done Flag
@@ -218,7 +217,7 @@ int main(int argc, char const *argv[]) {
 
         _put_str("######### Planned Path #########\n");
         for (int i = idx; i >=0; i--) {
-            _put_value(map[i]);
+            _put_value(path_planned[i]);
         }
         _put_str("################################\n");
 
