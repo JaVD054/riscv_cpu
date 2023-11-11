@@ -7,7 +7,7 @@ help() {
    echo "Usage: ./c_simulator.sh -h, -f <file_path> -s <start_point> -e <end_point>"
    echo "options:"
    echo "h     Print this Help."
-   echo "f     Path of the C program file."
+   echo "f     Path of the t1b_path_planner.c file."
    echo "s     Start point."
    echo "e     End point."
    echo

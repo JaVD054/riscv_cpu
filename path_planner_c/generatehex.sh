@@ -14,7 +14,7 @@ LDFLAGS+=" -Wl,--defsym=__ram=0x02000000,--defsym=__ram_size=$RAM,--defsym=__sta
 
 cd ../
 
-riscv64-unknown-elf-gcc $CFLAGS -c "c_programs/$infile" -o .temp.file.o && \
+riscv64-unknown-elf-gcc $CFLAGS -c "path_planner_c/$infile" -o .temp.file.o && \
 riscv64-unknown-elf-gcc $LDFLAGS -o .temp.file.elf .temp.file.o && \
 riscv64-unknown-elf-objdump --visualize-jumps -t -S --source-comment='     ### ' .temp.file.elf -M no-aliases,numeric > machine_code.lss && \
 riscv64-unknown-elf-objcopy -O binary .temp.file.elf .temp.file.bin && \
