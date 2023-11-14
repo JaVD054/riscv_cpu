@@ -29,6 +29,7 @@ always @(*) begin
                 3'b101: controls = 16'b0_010_0_0_00_111_11_0_0_0; // bge
                 3'b110: controls = 16'b0_010_0_0_00_001_11_0_0_1; // bltu
                 3'b111: controls = 16'b0_010_0_0_00_011_11_0_0_1; // bgeu
+                default: controls = 16'b0_010_0_0_00_100_01_0_0_0; // ???
             endcase
         end  // beq
         7'b0010011: begin // I–type ALU
@@ -42,7 +43,7 @@ always @(*) begin
         7'b1100111: controls = 16'b1_000_1_0_10_000_00_1_1_0; // jalr
         7'b0110111: controls = 16'b1_100_1_0_00_000_00_0_0_0; // lui
         7'b0010111: controls = 16'b1_100_1_0_11_000_00_0_0_0; // auipc
-        default:    controls = 16'bx_xxx_x_x_xx_xxx_xx_x_x_0; // ???
+        default:    controls = 16'bx_xxx_x_x_xx_xxx_xx_x_x_x; // ???
     endcase
 end
 

@@ -10,7 +10,7 @@ module riscv_cpu (
     input  [31:0] ReadData
 );
 
-wire        ALUSrc, RegWrite, Jump, Zero, Jalr, CmpResult;
+wire        ALUSrc, RegWrite, Jump, Zero, Jalr, CmpResult, PCSrc, unsign;
 wire [1:0]  ResultSrc;
 wire [2:0]  ImmSrc;
 wire [2:0]  ALUControl;
