@@ -42,8 +42,9 @@ sgn_zero_extend sgn_ext(ReadData,Instr[14:12] ,ReadDataExt);
 // store logic
 store_extend   store_ext(WriteData, Instr[13:12], Mem_WrData);
 
-// auiPC logic
-adder          auipc(PC,ImmExt, auipcResult);
+assign auipcResult = PCTarget;
+ // auiPC logic
+// adder          auipc(PC,ImmExt, auipcResult);
 
 
 assign CmpResult = ALUResult[0];
