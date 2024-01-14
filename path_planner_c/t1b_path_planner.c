@@ -1,6 +1,18 @@
+/*
+# Team ID:          1176
+# Theme:            Astro Bot
+# Author List:      Sriram, Javeed, Abhishek
+# Filename:         t1b_path_planner.c
+# File Description: path finder for the robot
+# Global Variables:  START_POINT, END_POINT, NODE_POINT, CPU_DONE
+*/
+
+
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+// #include "array.h"
 
 #define V 30
 #define INF 0xf
@@ -51,6 +63,13 @@
 
 #endif
 
+int is_node_connected(uint32_t *arr, uint8_t *n) {
+    for (uint8_t i = 0; i < 4; i++) {
+        if (((*arr>>(i*8))&0xff) == *n) return 1;
+    } 
+    return 0;
+}
+
 //to find the bit value at a particular position
 int bit_position(uint32_t *n, uint8_t *i) {
     return ((*n >> (29-*i)) & 1);
@@ -96,8 +115,8 @@ int main(int argc, char const *argv[]) {
 
     #ifdef __linux__
 
-        const uint8_t START_POINT   = atoi(argv[1]);
-        const uint8_t END_POINT     = atoi(argv[2]);
+        const uint8_t START_POINT   = 12;
+        const uint8_t END_POINT     = 10;
         uint8_t NODE_POINT          = 0;
         uint8_t CPU_DONE            = 0;
 
@@ -115,7 +134,6 @@ int main(int argc, char const *argv[]) {
     uint8_t idx = 0;
 
 
-    // ############# Add your code here #############
     
     // check if the start and end points are valid
     if(!(30>START_POINT && START_POINT>=0 && 30>END_POINT && END_POINT>=0)) return 0;
@@ -133,36 +151,36 @@ int main(int argc, char const *argv[]) {
     #endif
 
     // adjacency matrix of the graph
-    path_planned[0] = 0b010000000000000000000000000000;
-    path_planned[1] = 0b101000000000000000000000000001;
-    path_planned[2] = 0b010100001000000000000000000000;
-    path_planned[3] = 0b001010000000000000000000000010;
-    path_planned[4] = 0b000101100000000000000000000000;
-    path_planned[5] = 0b000010000000000000000000000000;
-    path_planned[6] = 0b000010010000000000000000000000;
-    path_planned[7] = 0b000000101000000000000000000000;
-    path_planned[8] = 0b001000010100100000000000000000;
-    path_planned[9] = 0b000000001011000000000000000000;
-    path_planned[10] = 0b000000000100000000000000000000;
-    path_planned[11] = 0b000000000100000000000000000000;
-    path_planned[12] = 0b000000001000010000010000000000;
-    path_planned[13] = 0b000000000000101000000000000000;
-    path_planned[14] = 0b000000000000000110000000000000;
-    path_planned[15] = 0b000000000000001000000000000000;
-    path_planned[16] = 0b000000000000001001100000000000;
-    path_planned[17] = 0b000000000000000010000000000000;
-    path_planned[18] = 0b000000000000000010010000000000;
-    path_planned[19] = 0b000000000000100000101000000000;
-    path_planned[20] = 0b000000000000000000010100100001;
-    path_planned[21] = 0b000000000000000000001011000000;
-    path_planned[22] = 0b000000000000000000000100000000;
-    path_planned[23] = 0b000000000000000000000100000000;
-    path_planned[24] = 0b000000000000000000001000010000;
-    path_planned[25] = 0b000000000000000000000000101000;
-    path_planned[26] = 0b000000000000000000000000010110;
-    path_planned[27] = 0b000000000000000000000000001000;
-    path_planned[28] = 0b000100000000000000000000001001;
-    path_planned[29] = 0b010000000000000000001000000010;
+    path_planned [0] = 0x01ffffff;
+    path_planned [1] = 0x001dff02;
+    path_planned [2] = 0x0108ff03;
+    path_planned [3] = 0x02ff041c;
+    path_planned [4] = 0x030506ff;
+    path_planned [5] = 0x04ffffff;
+    path_planned [6] = 0x04ff07ff;
+    path_planned [7] = 0x08ff06ff;
+    path_planned [8] = 0x0702090c;
+    path_planned [9] = 0x080aff0b;
+    path_planned [10] = 0x09ffffff;
+    path_planned [11] = 0x09ffffff;
+    path_planned [12] = 0x0813ff0d;
+    path_planned [13] = 0x0eff0cff;
+    path_planned [14] = 0x0d0f10ff;
+    path_planned [15] = 0x0effffff;
+    path_planned [16] = 0x0e1112ff;
+    path_planned [17] = 0x10ffffff;
+    path_planned [18] = 0x13ff10ff;
+    path_planned [19] = 0x12ff0c14;
+    path_planned [20] = 0x13151d18;
+    path_planned [21] = 0x1417ff16;
+    path_planned [22] = 0x15ffffff;
+    path_planned [23] = 0x15ffffff;
+    path_planned [24] = 0x19ff14ff;
+    path_planned [25] = 0x1aff18ff;
+    path_planned [26] = 0x191b1cff;
+    path_planned [27] = 0x1affffff;
+    path_planned [28] = 0x1aff1d03;
+    path_planned [29] = 0x1cff1401;
 
     // initialize the distance of all vertices to infinity
     for (uint8_t i = 0; i < 4; i++) {
@@ -187,19 +205,21 @@ int main(int argc, char const *argv[]) {
 		bit_load(&visited,&u);
 
         // updating the distance of the adjacent unvisited vertices
-		for (uint8_t v = 0; v < V; v++)
-			if (!bit_position (&visited,&v) && bit_position (&path_planned[u],&v)   
+		for (uint8_t v = 0; v < V; v++){
+            bool weight = is_node_connected(&path_planned[u],&v);
+            uint8_t dist_u = array_index(dist,u);
+			if (!bit_position (&visited,&v) && weight   
                                 // if the vertex is not visited (value of current v has never been the value of u) 
                                 //and there is an edge between u and v
-				&& array_index(dist,u) != INF  
+				&& dist_u != INF  
                                 // if the distance of u is not infinity
-				&& array_index(dist,u) + bit_position (&path_planned[u],&v) < array_index(dist,v)) 
+				&& dist_u + weight < array_index(dist,v)) 
                                 // sum of distance to u and edge weight of v-u is 
                                 //less than the distance to v (v is not visited)
                 {
-                    array_write(dist,&v,array_index(dist,u) + bit_position (&path_planned[u],&v)); //update the distance of v     
+                    array_write(dist,&v,dist_u + weight); //update the distance of v     
                     array_write8(prev,&v, u); //update the parent of v
-                }
+                }}
 	}
 
     // backtracking the path from the destination to the start
@@ -210,7 +230,6 @@ int main(int argc, char const *argv[]) {
         path_planned[(idx)++]= currentVertex = array_index8(prev,currentVertex);
     }
 
-    // ##############################################
 
     // the node values are written into data memory sequentially.
     for (int i = --idx; i >=0; i--) {

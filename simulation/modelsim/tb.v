@@ -64,8 +64,13 @@ initial begin
     i = 0;
 end
 
+
+
 always @(negedge clk) begin
     if(MemWrite && !reset) begin
+        if (DataAdr == 32'h02000070)begin
+            $display("path_planned[12] = %h", WriteData);
+        end
         if (DataAdr === 32'h02000008) begin
             $display("Expected NODE POINT = %d, Actual NODE POINT = %d", register_array[i], WriteData);
             if (register_array[i] != WriteData || WriteData[0] === 1'bx) begin

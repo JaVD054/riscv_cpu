@@ -10,10 +10,7 @@ module data_mem #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 32, MEM_SIZE = 64) (
 // array of 64 32-bit words or data
 reg [DATA_WIDTH-1:0] data_ram [0:MEM_SIZE-1];
 
-initial begin
-    data_ram[0] = 32'h00000000;
-    data_ram[1] = 32'h00000007;
-end
+
 
 // combinational read logic
 // word-aligned memory access
