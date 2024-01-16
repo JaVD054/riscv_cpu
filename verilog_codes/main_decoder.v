@@ -20,7 +20,7 @@ always @(*) begin
         // RegWrite_ImmSrc_ALUSrc_MemWrite_ResultSrc_Branch_ALUOp_Jump_jalr_unsign
         7'b0000011: controls = 16'b1_000_1_0_01_000_00_0_0_0; // lw
         7'b0100011: controls = 16'b0_001_1_1_00_000_00_0_0_0; // sw
-        7'b0110011: controls = 16'b1_xxx_0_0_00_000_10_0_0_0; // R–type
+        7'b0110011: controls = 16'b1_000_0_0_00_000_10_0_0_0; // R–type
         7'b1100011: begin
             case(funct3)
                 3'b000: controls = 16'b0_010_0_0_00_100_01_0_0_0; // beq

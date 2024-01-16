@@ -16,7 +16,7 @@ module datapath (
 );
 
 wire [31:0] PCNext, PCPlus4, PCTarget,PCNextTemp;
-wire [31:0] ImmExt, SrcA, SrcB, Result, WriteData, ALUResult;
+wire [31:0] ImmExt, SrcA, SrcB, Result,RegisterOut1, ResisterOut2, ALUResult;
 wire [31:0] auipcResult,ReadDataExt;
 // wire [31:0] upimm = {Instr[31:12], 12'b0};
 
@@ -28,11 +28,11 @@ mux2 #(32)     pcmux(PCPlus4, PCTarget, PCSrc, PCNextTemp);
 mux2 #(32)     jalrmux(PCNextTemp, ALUResult, Jalr, PCNext);
 
 // register file logic
-reg_file       rf (clk, RegWrite, Instr[19:15], Instr[24:20], Instr[11:7], Result, SrcA, WriteData);
+reg_file       rf (clk, RegWrite, Instr[19:15], Instr[24:20], Instr[11:7], Result, RegisterOut1, ResisterOut2);
 sign_extend    ext (Instr[31:7], ImmSrc, ImmExt);
 
 // ALU logic
-mux2 #(32)      srcbmux(WriteData, ImmExt, ALUSrc, SrcB);
+mux2 #(32)      srcbmux(ResisterOut2, ImmExt, ALUSrc, SrcB);
 alu             alu (SrcA, SrcB, ALUControl, Instr[30], unsign, ALUResult, Zero);
 mux4 #(32)      resultmux(ALUResult, ReadDataExt, PCPlus4,auipcResult, ResultSrc, Result);
 
@@ -40,7 +40,7 @@ mux4 #(32)      resultmux(ALUResult, ReadDataExt, PCPlus4,auipcResult, ResultSrc
 sgn_zero_extend sgn_ext(ReadData,Instr[14:12] ,ReadDataExt);
 
 // store logic
-store_extend   store_ext(WriteData, Instr[13:12], Mem_WrData);
+store_extend   store_ext(ResisterOut2, Instr[13:12], Mem_WrData);
 
 assign auipcResult = PCTarget;
  // auiPC logic
@@ -48,6 +48,7 @@ assign auipcResult = PCTarget;
 
 
 assign CmpResult = ALUResult[0];
+assign SrcA = (ImmSrc==3'b100)?0:RegisterOut1;
 
 // assign Mem_WrData = WriteData;
 assign Mem_WrAddr = ALUResult;
