@@ -153,134 +153,134 @@ Disassembly of section .text:
   b4:	|                     00000593          	addi	x11,x0,0
      ###     path_planned [0] = 0x01ffffff;
   b8:	|                     fff40793          	addi	x15,x8,-1
-  bc:	|                     04f42023          	sw	x15,64(x8)
+  bc:	|                     02f42823          	sw	x15,48(x8)
      ###     path_planned [1] = 0x001dff02;
   c0:	|                     001e07b7          	lui	x15,0x1e0
   c4:	|                     f0278793          	addi	x15,x15,-254 # 1dff02 <__flash_size+0x1df702>
-  c8:	|                     04f42223          	sw	x15,68(x8)
+  c8:	|                     02f42a23          	sw	x15,52(x8)
      ###     path_planned [2] = 0x0108ff03;
   cc:	|                     010907b7          	lui	x15,0x1090
   d0:	|                     f0378793          	addi	x15,x15,-253 # 108ff03 <__flash_size+0x108f703>
-  d4:	|                     04f42423          	sw	x15,72(x8)
+  d4:	|                     02f42c23          	sw	x15,56(x8)
      ###     path_planned [3] = 0x02ff041c;
   d8:	|                     02ff07b7          	lui	x15,0x2ff0
   dc:	|                     41c78793          	addi	x15,x15,1052 # 2ff041c <__global_pointer$+0xfefc1c>
-  e0:	|                     04f42623          	sw	x15,76(x8)
+  e0:	|                     02f42e23          	sw	x15,60(x8)
      ###     path_planned [4] = 0x030506ff;
   e4:	|                     030507b7          	lui	x15,0x3050
   e8:	|                     6ff78793          	addi	x15,x15,1791 # 30506ff <__global_pointer$+0x104feff>
-  ec:	|                     04f42823          	sw	x15,80(x8)
+  ec:	|                     04f42023          	sw	x15,64(x8)
      ###     path_planned [5] = 0x04ffffff;
   f0:	|                     050007b7          	lui	x15,0x5000
   f4:	|                     fff78793          	addi	x15,x15,-1 # 4ffffff <__global_pointer$+0x2fff7ff>
-  f8:	|                     04f42a23          	sw	x15,84(x8)
+  f8:	|                     04f42223          	sw	x15,68(x8)
      ###     path_planned [6] = 0x04ff07ff;
   fc:	|                     04ff07b7          	lui	x15,0x4ff0
  100:	|                     7ff78793          	addi	x15,x15,2047 # 4ff07ff <__global_pointer$+0x2feffff>
- 104:	|                     04f42c23          	sw	x15,88(x8)
+ 104:	|                     04f42423          	sw	x15,72(x8)
      ###     path_planned [7] = 0x08ff06ff;
  108:	|                     08ff07b7          	lui	x15,0x8ff0
  10c:	|                     6ff78793          	addi	x15,x15,1791 # 8ff06ff <__global_pointer$+0x6fefeff>
- 110:	|                     04f42e23          	sw	x15,92(x8)
+ 110:	|                     04f42623          	sw	x15,76(x8)
      ###     path_planned [8] = 0x0702090c;
  114:	|                     070217b7          	lui	x15,0x7021
  118:	|                     90c78793          	addi	x15,x15,-1780 # 702090c <__global_pointer$+0x502010c>
- 11c:	|                     06f42023          	sw	x15,96(x8)
+ 11c:	|                     04f42823          	sw	x15,80(x8)
      ###     path_planned [9] = 0x080aff0b;
  120:	|                     080b07b7          	lui	x15,0x80b0
  124:	|                     f0b78793          	addi	x15,x15,-245 # 80aff0b <__global_pointer$+0x60af70b>
- 128:	|                     06f42223          	sw	x15,100(x8)
+ 128:	|                     04f42a23          	sw	x15,84(x8)
      ###     path_planned [10] = 0x09ffffff;
  12c:	|                     0a0007b7          	lui	x15,0xa000
  130:	|                     fff78793          	addi	x15,x15,-1 # 9ffffff <__global_pointer$+0x7fff7ff>
- 134:	|                     06f42423          	sw	x15,104(x8)
+ 134:	|                     04f42c23          	sw	x15,88(x8)
      ###     path_planned [11] = 0x09ffffff;
- 138:	|                     06f42623          	sw	x15,108(x8)
+ 138:	|                     04f42e23          	sw	x15,92(x8)
      ###     path_planned [12] = 0x0813ff0d;
  13c:	|                     081407b7          	lui	x15,0x8140
  140:	|                     f0d78793          	addi	x15,x15,-243 # 813ff0d <__global_pointer$+0x613f70d>
- 144:	|                     06f42823          	sw	x15,112(x8)
+ 144:	|                     06f42023          	sw	x15,96(x8)
      ###     path_planned [13] = 0x0eff0cff;
  148:	|                     0eff17b7          	lui	x15,0xeff1
  14c:	|                     cff78793          	addi	x15,x15,-769 # eff0cff <__global_pointer$+0xcff04ff>
- 150:	|                     06f42a23          	sw	x15,116(x8)
+ 150:	|                     06f42223          	sw	x15,100(x8)
      ###     path_planned [14] = 0x0d0f10ff;
  154:	|                     0d0f17b7          	lui	x15,0xd0f1
  158:	|                     0ff78793          	addi	x15,x15,255 # d0f10ff <__global_pointer$+0xb0f08ff>
- 15c:	|                     06f42c23          	sw	x15,120(x8)
+ 15c:	|                     06f42423          	sw	x15,104(x8)
      ###     path_planned [15] = 0x0effffff;
  160:	|                     0f0007b7          	lui	x15,0xf000
  164:	|                     fff78793          	addi	x15,x15,-1 # effffff <__global_pointer$+0xcfff7ff>
- 168:	|                     06f42e23          	sw	x15,124(x8)
+ 168:	|                     06f42623          	sw	x15,108(x8)
      ###     path_planned [16] = 0x0e1112ff;
  16c:	|                     0e1117b7          	lui	x15,0xe111
  170:	|                     2ff78793          	addi	x15,x15,767 # e1112ff <__global_pointer$+0xc110aff>
- 174:	|                     08f42023          	sw	x15,128(x8)
+ 174:	|                     06f42823          	sw	x15,112(x8)
      ###     path_planned [17] = 0x10ffffff;
  178:	|                     110007b7          	lui	x15,0x11000
  17c:	|                     fff78793          	addi	x15,x15,-1 # 10ffffff <__global_pointer$+0xefff7ff>
- 180:	|                     08f42223          	sw	x15,132(x8)
+ 180:	|                     06f42a23          	sw	x15,116(x8)
      ###     path_planned [18] = 0x13ff10ff;
  184:	|                     13ff17b7          	lui	x15,0x13ff1
  188:	|                     0ff78793          	addi	x15,x15,255 # 13ff10ff <__global_pointer$+0x11ff08ff>
- 18c:	|                     08f42423          	sw	x15,136(x8)
+ 18c:	|                     06f42c23          	sw	x15,120(x8)
      ###     path_planned [19] = 0x12ff0c14;
  190:	|                     12ff17b7          	lui	x15,0x12ff1
  194:	|                     c1478793          	addi	x15,x15,-1004 # 12ff0c14 <__global_pointer$+0x10ff0414>
- 198:	|                     08f42623          	sw	x15,140(x8)
+ 198:	|                     06f42e23          	sw	x15,124(x8)
      ###     path_planned [20] = 0x13151d18;
  19c:	|                     131527b7          	lui	x15,0x13152
  1a0:	|                     d1878793          	addi	x15,x15,-744 # 13151d18 <__global_pointer$+0x11151518>
- 1a4:	|                     08f42823          	sw	x15,144(x8)
+ 1a4:	|                     08f42023          	sw	x15,128(x8)
      ###     path_planned [21] = 0x1417ff16;
  1a8:	|                     141807b7          	lui	x15,0x14180
  1ac:	|                     f1678793          	addi	x15,x15,-234 # 1417ff16 <__global_pointer$+0x1217f716>
- 1b0:	|                     08f42a23          	sw	x15,148(x8)
+ 1b0:	|                     08f42223          	sw	x15,132(x8)
      ###     path_planned [22] = 0x15ffffff;
  1b4:	|                     160007b7          	lui	x15,0x16000
  1b8:	|                     fff78793          	addi	x15,x15,-1 # 15ffffff <__global_pointer$+0x13fff7ff>
- 1bc:	|                     08f42c23          	sw	x15,152(x8)
+ 1bc:	|                     08f42423          	sw	x15,136(x8)
      ###     path_planned [23] = 0x15ffffff;
- 1c0:	|                     08f42e23          	sw	x15,156(x8)
+ 1c0:	|                     08f42623          	sw	x15,140(x8)
      ###     path_planned [24] = 0x19ff14ff;
  1c4:	|                     19ff17b7          	lui	x15,0x19ff1
  1c8:	|                     4ff78793          	addi	x15,x15,1279 # 19ff14ff <__global_pointer$+0x17ff0cff>
- 1cc:	|                     0af42023          	sw	x15,160(x8)
+ 1cc:	|                     08f42823          	sw	x15,144(x8)
      ###     path_planned [25] = 0x1aff18ff;
  1d0:	|                     1aff27b7          	lui	x15,0x1aff2
  1d4:	|                     8ff78713          	addi	x14,x15,-1793 # 1aff18ff <__global_pointer$+0x18ff10ff>
- 1d8:	|                     0ae42223          	sw	x14,164(x8)
+ 1d8:	|                     08e42a23          	sw	x14,148(x8)
      ###     path_planned [28] = 0x1aff1d03;
  1dc:	|                     d0378793          	addi	x15,x15,-765
      ###     path_planned [26] = 0x191b1cff;
  1e0:	|                     191b2737          	lui	x14,0x191b2
      ###     path_planned [28] = 0x1aff1d03;
- 1e4:	|                     0af42823          	sw	x15,176(x8)
+ 1e4:	|                     0af42023          	sw	x15,160(x8)
      ###     path_planned [26] = 0x191b1cff;
  1e8:	|                     cff70713          	addi	x14,x14,-769 # 191b1cff <__global_pointer$+0x171b14ff>
      ###     path_planned [29] = 0x1cff1401;
  1ec:	|                     1cff17b7          	lui	x15,0x1cff1
      ###     path_planned [26] = 0x191b1cff;
- 1f0:	|                     0ae42423          	sw	x14,168(x8)
+ 1f0:	|                     08e42c23          	sw	x14,152(x8)
      ###     path_planned [29] = 0x1cff1401;
  1f4:	|                     40178793          	addi	x15,x15,1025 # 1cff1401 <__global_pointer$+0x1aff0c01>
      ###     path_planned [27] = 0x1affffff;
  1f8:	|                     1b000737          	lui	x14,0x1b000
  1fc:	|                     fff70713          	addi	x14,x14,-1 # 1affffff <__global_pointer$+0x18fff7ff>
      ###     path_planned [29] = 0x1cff1401;
- 200:	|                     0af42a23          	sw	x15,180(x8)
+ 200:	|                     0af42223          	sw	x15,164(x8)
      ###         dist[i] = 0xffffffff;
  204:	|                     fff00793          	addi	x15,x0,-1
      ###     path_planned [27] = 0x1affffff;
- 208:	|                     0ae42623          	sw	x14,172(x8)
+ 208:	|                     08e42e23          	sw	x14,156(x8)
      ###         dist[i] = 0xffffffff;
- 20c:	|                     00f42823          	sw	x15,16(x8)
- 210:	|                     00f42a23          	sw	x15,20(x8)
+ 20c:	|                     0af42423          	sw	x15,168(x8)
+ 210:	|                     0af42623          	sw	x15,172(x8)
      ###     array_write(dist, &START_POINT, 0);
  214:	|                     00044503          	lbu	x10,0(x8)
      ###         dist[i] = 0xffffffff;
- 218:	|                     00f42c23          	sw	x15,24(x8)
- 21c:	|                     00f42e23          	sw	x15,28(x8)
+ 218:	|                     0af42823          	sw	x15,176(x8)
+ 21c:	|                     0af42a23          	sw	x15,180(x8)
      ###     array_write(dist, &START_POINT, 0);
  220:	|                     240000ef          	jal	x1,460 <array_write.constprop.0.isra.0>
      ###     // initialize the parent of the start vertex to 0xff
@@ -305,7 +305,7 @@ Disassembly of section .text:
      ###         // updating the distance of the adjacent unvisited vertices
      ### 		for (uint8_t v = 0; v < V; v++){
      ###             bool weight = is_node_connected(&path_planned[u],&v);
- 23c:	|                     040b0c13          	addi	x24,x22,64 # 2000040 <__bss_end+0x40>
+ 23c:	|                     030b0c13          	addi	x24,x22,48 # 2000030 <__bss_end+0x30>
      ###     for (uint8_t i = 0; i < 4; i++) {
  240:	|                     02000c93          	addi	x25,x0,32
      ### int main(int argc, char const *argv[]) {
@@ -423,7 +423,7 @@ Disassembly of section .text:
      ###     uint8_t currentVertex = END_POINT;
  34c:	|  |  |               0ff77713          	andi	x14,x14,255
      ###     path_planned[(idx)++] = currentVertex;
- 350:	|  |  |               04e7a023          	sw	x14,64(x15)
+ 350:	|  |  |               02e7a823          	sw	x14,48(x15)
  354:	|  |  |               00100793          	addi	x15,x0,1
      ###     while (currentVertex != START_POINT) {
  358:	|  |  |     /-------> 0005c683          	lbu	x13,0(x11) # 2000000 <__bss_end>
@@ -444,7 +444,7 @@ Disassembly of section .text:
      ###         NODE_POINT = path_planned[i];
  374:	|  |  |     |  |  /-> 00279693          	slli	x13,x15,0x2
  378:	|  |  |     |  |  |   00d706b3          	add	x13,x14,x13
- 37c:	|  |  |     |  |  |   0406c683          	lbu	x13,64(x13)
+ 37c:	|  |  |     |  |  |   0306c683          	lbu	x13,48(x13)
      ###     for (int i = --idx; i >=0; i--) {
  380:	|  |  |     |  |  |   fff78793          	addi	x15,x15,-1
      ###         NODE_POINT = path_planned[i];
@@ -486,7 +486,7 @@ Disassembly of section .text:
  3dc:	            |  \----> 00377613          	andi	x12,x14,3
  3e0:	            |         0fc77713          	andi	x14,x14,252
  3e4:	            |         00e58733          	add	x14,x11,x14
- 3e8:	            |         02072703          	lw	x14,32(x14)
+ 3e8:	            |         01072703          	lw	x14,16(x14)
  3ec:	            |         00361693          	slli	x13,x12,0x3
  3f0:	            |         00d556b3          	srl	x13,x10,x13
  3f4:	            |         fff64613          	xori	x12,x12,-1
@@ -501,7 +501,7 @@ Disassembly of section .text:
  410:	            |         0ff6f713          	andi	x14,x13,255
      ###         path_planned[(idx)++]= currentVertex = array_index8(prev,currentVertex);
  414:	            |         0ff6f693          	andi	x13,x13,255
- 418:	            |         04d7a023          	sw	x13,64(x15)
+ 418:	            |         02d7a823          	sw	x13,48(x15)
  41c:	            |         0ff67793          	andi	x15,x12,255
  420:	            \-------- f39ff06f          	jal	x0,358 <__ram_size+0x258>
 
@@ -512,7 +512,7 @@ Disassembly of section .text:
  42c:	00251513          	slli	x10,x10,0x2
  430:	02000737          	lui	x14,0x2000
  434:	00a70733          	add	x14,x14,x10
- 438:	01072703          	lw	x14,16(x14) # 2000010 <__bss_end+0x10>
+ 438:	0a872703          	lw	x14,168(x14) # 20000a8 <__bss_end+0xa8>
  43c:	00279693          	slli	x13,x15,0x2
  440:	f0000537          	lui	x10,0xf0000
  444:	00d55533          	srl	x10,x10,x13
@@ -528,7 +528,7 @@ Disassembly of section .text:
      ###     arr[(*n & 0xf8)>>3] = (arr[(*n & 0xf8)>>3]&~(0XF0000000>>((*n&0x7)*4))) | (val << (~(*n&0x7)*4));
  460:	00355713          	srli	x14,x10,0x3
  464:	020007b7          	lui	x15,0x2000
- 468:	01078793          	addi	x15,x15,16 # 2000010 <__bss_end+0x10>
+ 468:	0a878793          	addi	x15,x15,168 # 20000a8 <__bss_end+0xa8>
  46c:	00757513          	andi	x10,x10,7
  470:	00271713          	slli	x14,x14,0x2
  474:	00f70733          	add	x14,x14,x15
@@ -550,7 +550,7 @@ Disassembly of section .text:
      ###     arr[(*n & 0xfc)>>2] = (arr[(*n & 0xfc)>>2]&~(0XFF000000>>((*n&0x3)*8))) | (val << (~(*n&0x3)*8));
  4a8:	020007b7          	lui	x15,0x2000
  4ac:	0fc57713          	andi	x14,x10,252
- 4b0:	02078793          	addi	x15,x15,32 # 2000020 <__bss_end+0x20>
+ 4b0:	01078793          	addi	x15,x15,16 # 2000010 <__bss_end+0x10>
  4b4:	00357513          	andi	x10,x10,3
  4b8:	00f70733          	add	x14,x14,x15
  4bc:	00351693          	slli	x13,x10,0x3

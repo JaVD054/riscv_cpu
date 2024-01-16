@@ -115,9 +115,9 @@ int main(int argc, char const *argv[]) {
 
     #ifdef __linux__
 
-        const uint8_t START_POINT   = 12;
-        const uint8_t END_POINT     = 10;
-        uint8_t NODE_POINT          = 0;
+        const uint8_t START_POINT   = 0;//atoi(argv[1]);
+        const uint8_t END_POINT     = 18;//atoi(argv[2]);
+        uint32_t NODE_POINT          = 0;
         uint8_t CPU_DONE            = 0;
 
     #else
@@ -145,9 +145,9 @@ int main(int argc, char const *argv[]) {
         uint32_t dist[4]; // array to store the distance of each vertex, each 32 bit integer stores 4 vertices
         uint32_t path_planned[30]; // array to store the planned path and adjacency matrix of the graph
     #else
-        uint32_t *path_planned =0x02000040;      
-        uint32_t *prev = 0x02000020; 
-        uint32_t *dist = 0x02000010;
+        uint32_t *path_planned =0x02000030;      
+        uint32_t *prev = 0x02000010; 
+        uint32_t *dist = 0x020000A8;
     #endif
 
     // adjacency matrix of the graph
@@ -208,6 +208,7 @@ int main(int argc, char const *argv[]) {
 		for (uint8_t v = 0; v < V; v++){
             bool weight = is_node_connected(&path_planned[u],&v);
             uint8_t dist_u = array_index(dist,u);
+
 			if (!bit_position (&visited,&v) && weight   
                                 // if the vertex is not visited (value of current v has never been the value of u) 
                                 //and there is an edge between u and v
@@ -224,16 +225,20 @@ int main(int argc, char const *argv[]) {
 
     // backtracking the path from the destination to the start
     uint8_t currentVertex = END_POINT;
-
+    array_write8(dist,&idx,END_POINT);
     path_planned[(idx)++] = currentVertex;
     while (currentVertex != START_POINT) {
-        path_planned[(idx)++]= currentVertex = array_index8(prev,currentVertex);
+        idx++;
+        currentVertex = array_index8(prev,currentVertex);
+        array_write8(dist,&idx,currentVertex);
+        // path_planned[(idx)]= currentVertex = array_index8(prev,currentVertex);
     }
 
 
     // the node values are written into data memory sequentially.
     for (int i = --idx; i >=0; i--) {
-        NODE_POINT = path_planned[i];
+        NODE_POINT =// path_planned[i];
+        array_index8(dist,i);
     }
 
     // Path Planning Computation Done Flag
