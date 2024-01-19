@@ -109,13 +109,32 @@ uint8_t minDistance(uint32_t dist[], uint32_t *sptSet)
 	return min_index;
 }
 
+uint8_t turn_dir(uint32_t* array,uint8_t* prev_node, uint8_t* current_vertex,uint8_t* next_node){
+    if (*prev_node == *next_node)
+    {
+        return 0b10;
+    } // if the previous node and next node are same, the robot has to go backward
+
+    for (uint8_t i = 0; i < 4; i++){
+        if (((array[*current_vertex]>>(i*8))&0xff) == *next_node) {
+            for (uint8_t j = 1; j < 4; j++){
+                if (((array[*current_vertex]<<(((i+j)&0b11)*8))&0xff) == *prev_node) {
+                    return (i+2)&0b11;
+                }
+            }
+            
+        } 
+    }
+    return 0xff;   
+}
+
 
 // main function
 int main(int argc, char const *argv[]) {
 
     #ifdef __linux__
 
-        const uint8_t START_POINT   = 0;//atoi(argv[1]);
+        uint8_t START_POINT   = 0;//atoi(argv[1]);
         const uint8_t END_POINT     = 18;//atoi(argv[2]);
         uint32_t NODE_POINT          = 0;
         uint8_t CPU_DONE            = 0;
@@ -224,21 +243,29 @@ int main(int argc, char const *argv[]) {
 	}
 
     // backtracking the path from the destination to the start
-    uint8_t currentVertex = END_POINT;
+    uint8_t current_vertex = END_POINT;
     array_write8(dist,&idx,END_POINT);
-    path_planned[(idx)++] = currentVertex;
-    while (currentVertex != START_POINT) {
+    // path_planned[(idx)++] = current_vertex;
+    while (current_vertex != START_POINT) {
         idx++;
-        currentVertex = array_index8(prev,currentVertex);
-        array_write8(dist,&idx,currentVertex);
-        // path_planned[(idx)]= currentVertex = array_index8(prev,currentVertex);
+        current_vertex = array_index8(prev,current_vertex);
+        array_write8(dist,&idx,current_vertex);
+        // path_planned[(idx)]= current_vertex = array_index8(prev,current_vertex);
     }
 
-
+    CPU_DONE = 2;
+    uint32_t prev_node;
     // the node values are written into data memory sequentially.
-    for (int i = --idx; i >=0; i--) {
+    for (int i = idx -1; i >=0; i--) {
         NODE_POINT =// path_planned[i];
         array_index8(dist,i);
+        if (CPU_DONE == 2) {
+            prev_node = END_POINT;
+            CPU_DONE = 0;
+        }
+        START_POINT = turn_dir(path_planned,&prev_node,&current_vertex,&NODE_POINT);
+        current_vertex = NODE_POINT;
+        prev_node = current_vertex;
     }
 
     // Path Planning Computation Done Flag
@@ -248,7 +275,7 @@ int main(int argc, char const *argv[]) {
 
         _put_str("######### Planned Path #########\n");
         for (int i = idx; i >=0; i--) {
-            _put_value(path_planned[i]);
+            _put_value(array_index8(dist,i));
         }
         _put_str("################################\n");
 
