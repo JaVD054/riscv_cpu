@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-// #include "array.h"
+
 
 #define V 30
 #define INF 0xf
@@ -72,11 +72,11 @@ int is_node_connected(uint32_t *arr, uint8_t *n) {
 
 //to find the bit value at a particular position
 int bit_position(uint32_t *n, uint8_t *i) {
-    return ((*n >> (29-*i)) & 1);
+    return ((*n >> (*i)) & 1);
 }
 //to set the bit value at a particular position
 void bit_load(uint32_t *n, uint8_t *i){
-    *n |= 0x20000000 >> *i;
+    *n |= 1 << *i;
 }
 
 //to read the 4bit value at a particular position
@@ -109,20 +109,16 @@ uint8_t minDistance(uint32_t dist[], uint32_t *sptSet)
 	return min_index;
 }
 
-uint8_t turn_dir(uint32_t* array,uint8_t* prev_node, uint8_t* current_vertex,uint8_t* next_node){
-    if (*prev_node == *next_node)
-    {
-        return 0b10;
-    } // if the previous node and next node are same, the robot has to go backward
-
+uint8_t turn_dir(uint32_t currentnode,uint8_t* prev_node,uint8_t* next_node){
+    if(*prev_node == 0xff) return 0x0;
     for (uint8_t i = 0; i < 4; i++){
-        if (((array[*current_vertex]>>(i*8))&0xff) == *next_node) {
-            for (uint8_t j = 1; j < 4; j++){
-                if (((array[*current_vertex]<<(((i+j)&0b11)*8))&0xff) == *prev_node) {
-                    return (i+2)&0b11;
+        if (((currentnode>>(i*8))&0xff) == *next_node) {
+            for (uint8_t j = 0; j < 4; j++){
+                if (((currentnode>>(((i+j)&0b11)*8))&0xff) == *prev_node) {
+                    return (j+2)&0b11;
                 }
             }
-            
+            return 0xf0;         
         } 
     }
     return 0xff;   
@@ -135,9 +131,10 @@ int main(int argc, char const *argv[]) {
     #ifdef __linux__
 
         uint8_t START_POINT   = 0;//atoi(argv[1]);
-        const uint8_t END_POINT     = 18;//atoi(argv[2]);
+        uint8_t END_POINT     = 20;//atoi(argv[2]);
         uint32_t NODE_POINT          = 0;
         uint8_t CPU_DONE            = 0;
+        uint8_t PREV_NODE            = 255;
 
     #else
         // Address value of variables are updated for RISC-V Implementation
@@ -145,6 +142,7 @@ int main(int argc, char const *argv[]) {
         #define END_POINT           (* (volatile uint8_t * ) 0x02000004)
         #define NODE_POINT          (* (volatile uint8_t * ) 0x02000008)
         #define CPU_DONE            (* (volatile uint8_t * ) 0x0200000c)
+        #define PREV_NODE            (* (volatile uint8_t * ) 0x02000010)
 
     #endif
 
@@ -164,9 +162,9 @@ int main(int argc, char const *argv[]) {
         uint32_t dist[4]; // array to store the distance of each vertex, each 32 bit integer stores 4 vertices
         uint32_t path_planned[30]; // array to store the planned path and adjacency matrix of the graph
     #else
-        uint32_t *path_planned =0x02000030;      
-        uint32_t *prev = 0x02000010; 
-        uint32_t *dist = 0x020000A8;
+        uint32_t *path_planned =0x02000034;      
+        uint32_t *prev = 0x02000014; 
+        uint32_t *dist = 0x020000AC;
     #endif
 
     // adjacency matrix of the graph
@@ -253,19 +251,23 @@ int main(int argc, char const *argv[]) {
         // path_planned[(idx)]= current_vertex = array_index8(prev,current_vertex);
     }
 
-    CPU_DONE = 2;
+
     uint32_t prev_node;
-    // the node values are written into data memory sequentially.
-    for (int i = idx -1; i >=0; i--) {
-        NODE_POINT =// path_planned[i];
-        array_index8(dist,i);
+    CPU_DONE = 2;
+    // the node values and turn direction are written into data memory sequentially.
+    for (int i = idx - 1; i >=0; i--) {
+        // wait for the CPU to read the previous node value
         if (CPU_DONE == 2) {
-            prev_node = END_POINT;
+            prev_node = PREV_NODE;
             CPU_DONE = 0;
         }
-        START_POINT = turn_dir(path_planned,&prev_node,&current_vertex,&NODE_POINT);
-        current_vertex = NODE_POINT;
+        NODE_POINT = array_index8(dist,i);
+        //write the turn direction into START_POINT data memory
+        START_POINT = turn_dir(path_planned[current_vertex],&prev_node,&NODE_POINT);
+        //
         prev_node = current_vertex;
+        current_vertex = NODE_POINT;
+        
     }
 
     // Path Planning Computation Done Flag
